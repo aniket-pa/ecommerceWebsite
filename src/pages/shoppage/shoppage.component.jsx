@@ -15,6 +15,7 @@ class ShopPage extends React.Component{
         const {collections}= this.state;
         return (
             <div>
+                <h1>COLLECTIONS</h1>
                 {
                     collections.map( ({title,items})=>(
                             <PreviewCollection title={title} items={items} />
