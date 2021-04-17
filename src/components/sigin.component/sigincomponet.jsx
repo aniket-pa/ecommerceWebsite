@@ -47,7 +47,6 @@ class SignIn extends react.Component{
                 <CustomButton  
                     type='submit'       
                     name="Sigin"
-                    
                 >SIGIN
                 </CustomButton>
                 <CustomButton  

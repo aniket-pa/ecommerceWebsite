@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
+import { useCallback } from 'react';
 
 const firebaseConfig = {
     apiKey: "AIzaSyAq6gULtCm6jZoA9y9sl-4SjFCzRk-VLoM",
@@ -19,5 +20,34 @@ const firebaseConfig = {
   provider.setCustomParameters({'prompt': 'select_account'})
 
   export const signInWithGoogle =() => auth.signInWithPopup(provider)
+
+  export const createUserProfileDocument = async (userAuth,additionalPar) =>{
+    if(!userAuth) return ;
+
+    const userRef = firestore.doc(`/users/${userAuth.uid}`);
+    const snapShotUser = await userRef.get()
+    //console.log(snapShotUser.exists);
+    const {email , displayName, uid  } = userAuth;
+    const userCreatedAt= new Date()
+    if(!snapShotUser.exists){
+
+      try{
+        await userRef.set({
+          email,
+          displayName,
+          uid,
+          userCreatedAt,
+          ...additionalPar
+        })
+      }
+      catch(err){
+          console.log(err)
+      }
+     
+    }
+
+    return userRef
+
+  }
 
   export default firebase;
